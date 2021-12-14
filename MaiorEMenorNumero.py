@@ -2,6 +2,7 @@
 
 ciclo = 0
 maior = 0
+menor = 0
 
 while ciclo < 5:
     ciclo = ciclo + 1
