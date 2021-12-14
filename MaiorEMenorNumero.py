@@ -1,4 +1,4 @@
-#Algoritmo que recebe números e identifica o maior e menor entre os números recebidos
+#Algoritmo que recebe nÃºmeros e identifica o maior e menor entre os nÃºmeros recebidos
 
 ciclo = 0
 maior = 0
@@ -12,5 +12,5 @@ while ciclo < 5:
     elif num < menor:
         menor = num
     
-print("Maior número =", maior)
-print("Menor número =", menor)
+print("Maior nÃºmero =", maior)
+print("Menor nÃºmero =", menor)
