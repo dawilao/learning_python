@@ -1,17 +1,19 @@
 #Algoritmo que recebe números e identifica o maior e menor entre os números recebidos
 
-ciclo = 0
-maior = 0
-menor = 0
+cont = 0
 
-while ciclo < 5:
-    ciclo = ciclo + 1
-    num = int(input("Digite um numero: "))
-
+while cont < 3:
+    num = int(input("Digite um número: "))
+    
+    if cont == 0:
+        menor = num
+        maior = num
+        
     if num > maior:
         maior = num
-    elif num < menor:
+    elif menor > num:
         menor = num
-    
+    cont = cont + 1
+
 print("Maior número =", maior)
 print("Menor número =", menor)
