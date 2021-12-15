@@ -27,7 +27,7 @@ while nota1 > 10 or nota1 < 0:
         print('A nota não pode ser negativa.')
         nota1 = float(input('Informe novamente a 1ª nota: '))
 
-nota2 = float(input('Informe a 2ª nota: '))
+nota2 = float(input('\nInforme a 2ª nota: '))
 while nota2 > 10 or nota2 < 0:
     if nota2 > 10:
         print('A nota não pode ser maior que 10 pontos.')
