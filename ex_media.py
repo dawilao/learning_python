@@ -1,0 +1,25 @@
+'''Faça um programa para a leitura de duas notas parciais de um aluno. O programa deve calcular a média alcançada por aluno e apresentar:
+A mensagem "Aprovado", se a média alcançada for maior ou igual a sete;
+A mensagem "Reprovado", se a média for menor do que sete;
+A mensagem "Aprovado com Distinção", se a média for igual a dez.'''
+
+def media (n1, n2): #função que calcula média
+    m = (nota1 + nota2)/2
+    return m
+
+def verifica_media(m):
+    if m > 7 and m < 10:
+        print('\nMédia final:', mfinal, 'pontos.\nAprovado! :)\n')
+    elif m == 10:
+        print('\nMédia final:', mfinal, 'pontos.\nAprovado com Distinção! :D')
+    else:
+        print('\nMédia final:', mfinal, 'pontos.\nReprovado. :(')
+
+print('MEDIA DE DUAS NOTAS')
+print('###################\n')
+
+nota1 = float(input('Informe a 1ª nota: '))
+nota2 = float(input('Informe a 2ª nota: '))
+
+mfinal = media(nota1, nota2)
+verifica_media(mfinal)
