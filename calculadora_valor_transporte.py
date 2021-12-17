@@ -7,8 +7,20 @@ valores = {'bolsa': 600, 'transp': 185.27}
 print('CALCULADORA DE VALOR DE TRANPORTE')
 print('#################################')
 
-uteis_mes = float(input('\nInforme a qntd. de dias úteis no mês (apenas números): '))
-
+while True:
+    while True:
+        try:
+            uteis_mes = float(input('\nInforme a qntd. de dias úteis no mês (apenas números): '))
+            break
+        except:
+            print('Apenas números!')
+    if uteis_mes < 0:
+        print('Números negativos não são aceitos.')
+    elif uteis_mes > 28:
+        print('O mês não pode ter tantos dias úteis.')
+    else:
+        break
+    
 transp_dia = valores['transp']/uteis_mes
 
 while x == True:
@@ -29,25 +41,15 @@ while x == True:
                     else:
                         break                   #Caso sim, encerra o while
             if uteis_trab == 'voltar':          #e valida a palavra chave inserida
-                break                           #e/ou continua o programa    
-                
-            while True:
-                uteis_trab = input('\nValor aux. transp.: ')
-                try:
-                    uteis_trab = float(uteis_trab)
-                    break
-                except:
-                    if uteis_trab != 'voltar' and uteis_trab != 'parar':
-                        print('Apenas números!')
-                    else:
-                        break
-            if uteis_trab == 'voltar':
-                break
-
+                break                           #e/ou continua o programa
             elif uteis_trab == 'parar':
                 print('Saindo.\n')
                 x = False
                 break
+            elif uteis_trab < 0:
+                print('Números negativos não são aceitos.')
+            elif uteis_trab > uteis_mes:
+                print('Dias úteis trabalhados não pode ser maior que a quantidade de dias úteis do mês.')
             else:
                 transp_total = float(uteis_trab) * transp_dia
                 transp_total = round(transp_total,2)
@@ -67,24 +69,14 @@ while x == True:
                         break                   #Caso sim, encerra o while
             if valor_total == 'voltar':         #e valida a palavra chave inserida
                 break                           #e/ou continua o programa
-
-            while True:
-                valor_total = input('\nValor aux. transp.: ')
-                try:
-                    valor_total = float(valor_total)
-                    break
-                except:
-                    if valor_total != 'voltar' and valor_total != 'parar':
-                        print('Apenas números!')
-                    else:
-                        break
-            if valor_total == 'voltar':
-                break
-                
             elif valor_total == 'parar':
                 print('Saindo.\n')
                 x = False
                 break
+            elif valor_total < 0:
+                print('Números negativos não são aceitos.')
+            elif valor_total > valores['transp']:
+                print('Valor total não pode ser maior que o valor máximo do transporte.')            
             else:
                 uteis_trab = float(valor_total)/transp_dia
                 uteis_trab = round(uteis_trab,2)
