@@ -18,18 +18,18 @@ while x == True:
 
     while valid != 'parar':
         if valid == 'dias':
-            while True:
+            while True:     #Error handling com while: deve ser inserido um número, ou palavas chave
                 uteis_trab = input('\nValor aux. transp.: ')
                 try:
-                    uteis_trab = float(uteis_trab)
+                    uteis_trab = float(uteis_trab)  #Verifica se o input é float
                     break
                 except:
-                    if uteis_trab != 'voltar' and uteis_trab != 'parar':
-                        print('Apenas números!')
+                    if uteis_trab != 'voltar' and uteis_trab != 'parar':    #Verifica se o input é uma palavra chave
+                        print('Apenas números!')                            #Caso não, retorna a frase
                     else:
-                        break
-            if uteis_trab == 'voltar':
-                break
+                        break                   #Caso sim, encerra o while
+            if uteis_trab == 'voltar':          #e valida a palavra chave inserida
+                break                           #e/ou continua o programa    
             elif uteis_trab == 'parar':
                 print('Saindo.\n')
                 x = False
@@ -40,18 +40,18 @@ while x == True:
                 print('Valor total: R$', transp_total)
 
         elif valid == 'valor':
-            while True:
+            while True:     #Error handling com while: deve ser inserido um número, ou palavas chave
                 valor_total = input('\nValor aux. transp.: ')
                 try:
-                    valor_total = float(valor_total)
+                    valor_total = float(valor_total)    #Verifica se o input é float
                     break
                 except:
-                    if valor_total != 'voltar' and valor_total != 'parar':
-                        print('Apenas números!')
+                    if valor_total != 'voltar' and valor_total != 'parar':  #Verifica se o input é uma palavra chave
+                        print('Apenas números!')                            #Caso não, retorna a frase
                     else:
-                        break
-            if valor_total == 'voltar':
-                break
+                        break                   #Caso sim, encerra o while
+            if valor_total == 'voltar':         #e valida a palavra chave inserida
+                break                           #e/ou continua o programa
             elif valor_total == 'parar':
                 print('Saindo.\n')
                 x = False
@@ -62,7 +62,7 @@ while x == True:
                 uteis_descont = uteis_mes - uteis_trab
                 uteis_descont = round(uteis_descont,2)
                 print('Qntd. dias:', uteis_trab, '\nDias descontados:', uteis_descont)
-  
+
     if valid == 'parar':
         print('Saindo.\n')
         x = False
