@@ -7,7 +7,12 @@ valores = {'bolsa': 600, 'transp': 185.27}
 print('CALCULADORA DE VALOR DE TRANPORTE')
 print('#################################')
 
-uteis_mes = float(input('\nInforme a qntd. de dias úteis no mês (apenas números): '))
+while True:
+    try:
+        uteis_mes = float(input('\nInforme a qntd. de dias úteis no mês (apenas números): '))
+        break
+    except:
+        print('Apenas números!')
 
 transp_dia = valores['transp']/uteis_mes
 
