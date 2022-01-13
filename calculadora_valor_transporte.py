@@ -7,8 +7,19 @@ valores = {'bolsa': 600, 'transp': 185.27}
 print('CALCULADORA DE VALOR DE TRANPORTE')
 print('#################################')
 
-uteis_mes = float(input('\nInforme a qntd. de dias úteis no mês (apenas números): '))
-
+while True:
+    while True:
+        uteis_mes = input('\nInforme a qntd. de dias úteis no mês (apenas números): ')
+        try:
+            uteis_mes = float(uteis_mes)
+            break
+        except:
+            print('Apenas números!')
+    if uteis_mes < 17 or uteis_mes > 24:
+        print('O mês não pode ter ' + str(round(uteis_mes)) + ' dias úteis. Tente novamente!')
+    else:
+        break
+    
 transp_dia = valores['transp']/uteis_mes
 
 while x == True:
