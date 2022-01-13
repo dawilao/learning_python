@@ -1,6 +1,11 @@
 '''Algoritmo que calcula o valor do transporte pela quantidade de dias úteis, além de calcular os dias úteis 
 pelo total do transporte.'''
 
+def versao():
+    print('Versão 1.0')
+    print('Criado por Dawison Oliveira')
+    return
+
 x = True
 valores = {'bolsa': 600, 'transp': 185.27}
 
@@ -14,7 +19,10 @@ while True:
             uteis_mes = float(uteis_mes)
             break
         except:
-            print('Apenas números!')
+            if uteis_mes == 'versão' or uteis_mes == 'versao':
+                versao()
+            else:
+                print('Apenas números!')
     if uteis_mes < 17 or uteis_mes > 24:
         print('O mês não pode ter ' + str(round(uteis_mes)) + ' dias úteis. Tente novamente!')
     else:
