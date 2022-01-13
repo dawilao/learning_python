@@ -1,9 +1,12 @@
 '''Algoritmo que calcula o valor do transporte pela quantidade de dias úteis, além de calcular os dias úteis 
 pelo total do transporte.'''
 
+import time
+
 def versao():
-    print('Versão 1.0')
+    print('Versão 1.0.2')
     print('Criado por Dawison Oliveira')
+    time.sleep(2)
     return
 
 x = True
@@ -83,5 +86,6 @@ while x == True:
                 print('Qntd. dias:', uteis_trab, '\nDias descontados:', uteis_descont)
   
     if valid == 'parar':
-        print('Saindo.\n')
+        print('Saindo...\n')
         x = False
+        time.sleep(3)
