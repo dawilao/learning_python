@@ -25,6 +25,7 @@ sair = ['Sair', 'sair', 'SAIR']
 num_question = 1
 pontuacao = 0
 iniciar = 0
+rodada = 1
 
 instrucoes()
 
@@ -34,40 +35,47 @@ while iniciar == 0:
         while iniciar in sim:    
             print('Iniciando...')
             while iniciar in sim:
+                print("\nRodada", rodada)
                 operacao = randint(1, 3)
                 x = randint(0, 20)
                 y = randint(0, 20)
                 if operacao == 1:
                     result = x + y
-                    resp = input('\n' + str(x) + ' + ' + str(y) + ' = ')
+                    resp = input('' + str(x) + ' + ' + str(y) + ' = ')
                     if resp == str(result):
                         pontuacao += 1
                         print('Acertou! :)\nPontuação:', pontuacao)
+                        rodada += 1
                     else:
                         pontuacao -= 1
                         print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
+                        rodada += 1
                     iniciar = input('Continuar? ')
                 if operacao == 2:
                     result = x - y
-                    resp = input('\n' + str(x) + ' - ' + str(y) + ' = ')  
+                    resp = input('' + str(x) + ' - ' + str(y) + ' = ')  
                     if resp == str(result):
                         pontuacao += 1
                         print('Acertou! :)\nPontuação:', pontuacao)
+                        rodada += 1
                     else:
                         pontuacao -= 1
                         print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
+                        rodada += 1
                     iniciar = input('Continuar? ')
                 if operacao == 3:
                     x = randint(0, 10)
                     y = randint(0, 10)
                     result = x * y
-                    resp = input('\n' + str(x) + ' x ' + str(y) + ' = ')
+                    resp = input('' + str(x) + ' x ' + str(y) + ' = ')
                     if resp == str(result):
                         pontuacao += 1
                         print('Acertou! :)\nPontuação:', pontuacao)
+                        rodada += 1
                     else:
                         pontuacao -= 1
                         print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
+                        rodada += 1
                     iniciar = input('Continuar? ')
                 ''' else:
                     result = x / y
