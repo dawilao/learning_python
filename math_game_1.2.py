@@ -18,9 +18,9 @@ def instrucoes():
     print('Acerte o máximo de questões que conseguir.')
     print('Evite digitar letras nas questões.')
 
-sim = ['1', 'Sim', 'sim', 's']
+sim = ['1', 'Sim', 'sim', 's', 'S']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
-sair = ['Sair', 'sair']
+sair = ['Sair', 'sair', 'SAIR']
 
 num_question = 1
 pontuacao = 0
@@ -45,7 +45,7 @@ while iniciar == 0:
                         print('Acertou! :)\nPontuação:', pontuacao)
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nPontuação:', pontuacao)
+                        print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
                     iniciar = input('Continuar? ')
                 if operacao == 2:
                     result = x - y
@@ -55,7 +55,7 @@ while iniciar == 0:
                         print('Acertou! :)\nPontuação:', pontuacao)
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nPontuação:', pontuacao)
+                        print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
                     iniciar = input('Continuar? ')
                 if operacao == 3:
                     x = randint(0, 10)
@@ -67,7 +67,7 @@ while iniciar == 0:
                         print('Acertou! :)\nPontuação:', pontuacao)
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nPontuação:', pontuacao)
+                        print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
                     iniciar = input('Continuar? ')
                 ''' else:
                     result = x / y
@@ -81,13 +81,11 @@ while iniciar == 0:
                     iniciar = input('Continuar? ')'''
                     
     while iniciar in inst:
-        print('elif instrucoes')
         instrucoes()
         iniciar = 0
         continue
 
     if iniciar in sair:
-        print('elif saindo')
         saindo()
         break;
         '''Fechando o loop
@@ -95,5 +93,5 @@ while iniciar == 0:
                 saindo()
                 break;  '''
 else:
-    print('a')
     saindo()
+
