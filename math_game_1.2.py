@@ -18,14 +18,6 @@ def instrucoes():
     print('Acerte o máximo de questões que conseguir.')
     print('Evite digitar letras nas questões.')
 
-def pontua():
-    pontuacao += 1
-    print('Acertou! :)\nPontuação:', pontuacao)
-
-def nao_pontua():
-    pontuacao -= 1
-    print('Errou :(\nPontuação:', pontuacao)
-
 sim = ['1', 'Sim', 'sim', 's']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
 sair = ['Sair', 'sair']
@@ -59,9 +51,11 @@ while iniciar == 0:
                     result = x - y
                     resp = input('\n' + str(x) + ' - ' + str(y) + ' = ')  
                     if resp == str(result):
-                        pontua()
+                        pontuacao += 1
+                        print('Acertou! :)\nPontuação:', pontuacao)
                     else:
-                        nao_pontua()
+                        pontuacao -= 1
+                        print('Errou :(\nPontuação:', pontuacao)
                     iniciar = input('Continuar? ')
                 if operacao == 3:
                     x = randint(0, 10)
@@ -87,13 +81,11 @@ while iniciar == 0:
                     iniciar = input('Continuar? ')'''
                     
     while iniciar in inst:
-        print('elif instrucoes')
         instrucoes()
         iniciar = 0
         continue
 
     if iniciar in sair:
-        print('elif saindo')
         saindo()
         break;
         '''Fechando o loop
@@ -101,5 +93,4 @@ while iniciar == 0:
                 saindo()
                 break;  '''
 else:
-    print('a')
     saindo()
