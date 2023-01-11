@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V1.1 (11/01/2023)
+JOGO DE MATEMÁTICA V1.2 (11/01/2023)
 '''
 
 from random import randint, randrange
@@ -34,7 +34,7 @@ while iniciar == 0:
         while iniciar in sim:    
             print('Iniciando...')
             while iniciar in sim:
-                operacao = randint(1,2)
+                operacao = randint(1, 3)
                 x = randint(0, 20)
                 y = randint(0, 20)
                 if operacao == 1:
@@ -47,7 +47,7 @@ while iniciar == 0:
                         pontuacao -= 1
                         print('Errou :(\nPontuação:', pontuacao)
                     iniciar = input('Continuar? ')
-                else:
+                if operacao == 2:
                     result = x - y
                     resp = input('\n' + str(x) + ' - ' + str(y) + ' = ')  
                     if resp == str(result):
@@ -57,6 +57,28 @@ while iniciar == 0:
                         pontuacao -= 1
                         print('Errou :(\nPontuação:', pontuacao)
                     iniciar = input('Continuar? ')
+                if operacao == 3:
+                    x = randint(0, 10)
+                    y = randint(0, 10)
+                    result = x * y
+                    resp = input('\n' + str(x) + ' x ' + str(y) + ' = ')
+                    if resp == str(result):
+                        pontuacao += 1
+                        print('Acertou! :)\nPontuação:', pontuacao)
+                    else:
+                        pontuacao -= 1
+                        print('Errou :(\nPontuação:', pontuacao)
+                    iniciar = input('Continuar? ')
+                ''' else:
+                    result = x / y
+                    resp = input('\n' + str(x) + ' / ' + str(y) + ' = ')
+                    if resp == str(result):
+                        pontuacao += 1
+                        print('Acertou! :)\nPontuação:', pontuacao)
+                    else:
+                        pontuacao -= 1
+                        print('Errou :(\nPontuação:', pontuacao)
+                    iniciar = input('Continuar? ')'''
                     
     while iniciar in inst:
         print('elif instrucoes')
@@ -75,4 +97,3 @@ while iniciar == 0:
 else:
     print('a')
     saindo()
-    
