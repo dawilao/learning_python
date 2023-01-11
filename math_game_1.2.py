@@ -18,6 +18,14 @@ def instrucoes():
     print('Acerte o máximo de questões que conseguir.')
     print('Evite digitar letras nas questões.')
 
+def pontua():
+    pontuacao += 1
+    print('Acertou! :)\nPontuação:', pontuacao)
+
+def nao_pontua():
+    pontuacao -= 1
+    print('Errou :(\nPontuação:', pontuacao)
+
 sim = ['1', 'Sim', 'sim', 's']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
 sair = ['Sair', 'sair']
@@ -51,11 +59,9 @@ while iniciar == 0:
                     result = x - y
                     resp = input('\n' + str(x) + ' - ' + str(y) + ' = ')  
                     if resp == str(result):
-                        pontuacao += 1
-                        print('Acertou! :)\nPontuação:', pontuacao)
+                        pontua()
                     else:
-                        pontuacao -= 1
-                        print('Errou :(\nPontuação:', pontuacao)
+                        nao_pontua()
                     iniciar = input('Continuar? ')
                 if operacao == 3:
                     x = randint(0, 10)
