@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V1.6 (12/01/2023)
+JOGO DE MATEMÁTICA V1.9 (12/01/2023)
 '''
 
 from random import randint, randrange
