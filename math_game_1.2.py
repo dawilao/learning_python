@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V1.2 (11/01/2023)
+JOGO DE MATEMÁTICA V1.6 (12/01/2023)
 '''
 
 from random import randint, randrange
@@ -26,80 +26,116 @@ num_question = 1
 pontuacao = 0
 iniciar = 0
 rodada = 1
+vidas = 3
 
 instrucoes()
 
 while iniciar == 0:
     iniciar = input('\nIniciar? ')
     if iniciar in sim or iniciar in inst:
-        while iniciar in sim:    
+        while iniciar in sim:
             print('Iniciando...')
-            while iniciar in sim:
-                print("\nRodada", rodada)
-                operacao = randint(1, 3)
-                x = randint(0, 20)
-                y = randint(0, 20)
+            while iniciar in sim and vidas > 0:
+                print('\nRodada', rodada, ' Vidas:', vidas, ' Pontuação:', pontuacao)
+                operacao = randint(1, 4)
+                x = randint(0, 50)
+                y = randint(0, 50)
                 if operacao == 1:
                     result = x + y
                     resp = input('' + str(x) + ' + ' + str(y) + ' = ')
                     if resp == str(result):
                         pontuacao += 1
-                        print('Acertou! :)\nPontuação:', pontuacao)
+                        print('Acertou! :)')
                         rodada += 1
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
+                        print('Errou :( Você perdeu uma vida.\nResposta correta:', result)
                         rodada += 1
-                    iniciar = input('Continuar? ')
-                if operacao == 2:
-                    result = x - y
-                    resp = input('' + str(x) + ' - ' + str(y) + ' = ')  
+                        vidas -= 1
+                    if vidas == 0:
+                        print('Você não tem mais vidas.')
+                        break    
+                    else:
+                        iniciar = input('Continuar? ')
+                elif operacao == 2:
+                    if y > x:
+                        result = y - x
+                        resp = input('' + str(y) + ' - ' + str(x) + ' = ')
+                    else:
+                        result = x - y
+                        resp = input('' + str(x) + ' - ' + str(y) + ' = ')
+
                     if resp == str(result):
                         pontuacao += 1
-                        print('Acertou! :)\nPontuação:', pontuacao)
+                        print('Acertou! :)')
                         rodada += 1
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
+                        print('Errou :( Você perdeu uma vida.\nResposta correta:', result)
                         rodada += 1
-                    iniciar = input('Continuar? ')
-                if operacao == 3:
+                        vidas -= 1
+                    if vidas == 0:
+                        print('Você não tem mais vidas.')
+                        break
+                    else:
+                        iniciar = input('Continuar? ')
+                elif operacao == 3:
                     x = randint(0, 10)
                     y = randint(0, 10)
                     result = x * y
                     resp = input('' + str(x) + ' x ' + str(y) + ' = ')
                     if resp == str(result):
                         pontuacao += 1
-                        print('Acertou! :)\nPontuação:', pontuacao)
+                        print('Acertou! :)')
                         rodada += 1
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nResposta correta:', result, '\nPontuação:', pontuacao)
+                        print('Errou :( Você perdeu uma vida.\nResposta correta:', result)
                         rodada += 1
-                    iniciar = input('Continuar? ')
-                ''' else:
-                    result = x / y
+                        vidas -= 1
+                    if vidas == 0:
+                        print('Você não tem mais vidas.')
+                        break
+                    else:
+                        iniciar = input('Continuar? ')
+                else:
+                    x = randint(0, 100)
+                    y = randint(1, 100)
+                    resto = x % y
+                    while resto != 0:
+                        x = randint(0, 100)
+                        y = randint(1, 100)
+                        resto = x % y
+                    result = x // y
                     resp = input('\n' + str(x) + ' / ' + str(y) + ' = ')
                     if resp == str(result):
                         pontuacao += 1
-                        print('Acertou! :)\nPontuação:', pontuacao)
+                        print('Acertou! :)')
                     else:
                         pontuacao -= 1
-                        print('Errou :(\nPontuação:', pontuacao)
-                    iniciar = input('Continuar? ')'''
-                    
+                        print('Errou :(\nResposta correta:', result)
+                        rodada += 1
+                        vidas -= 1
+                    if vidas == 0:
+                        print('Você não tem mais vidas.')
+                        break    
+                    else:
+                        iniciar = input('Continuar? ')
+            if vidas == 0:
+                print('Game over\nPontuação final:', pontuacao)
+                iniciar = 'n'
+                break    
     while iniciar in inst:
         instrucoes()
         iniciar = 0
         continue
-
     if iniciar in sair:
+        print('Pontuação final:', pontuacao)
         saindo()
-        break;
+        break
         '''Fechando o loop
             elif resp in sair:
                 saindo()
                 break;  '''
 else:
     saindo()
-
