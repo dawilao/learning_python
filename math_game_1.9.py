@@ -26,7 +26,7 @@ num_question = 1
 pontuacao = 0
 iniciar = 0
 rodada = 1
-vidas = 3
+vidas = 1
 
 instrucoes()
 
@@ -38,7 +38,6 @@ while iniciar == 0:
             while iniciar in sim and vidas > 0:
                 print('\nRodada', rodada, ' Vidas:', vidas, ' Pontuação:', pontuacao)
                 operacao = randint(1, 4)
-                operacao = 3
                 x = randint(0, 50)
                 y = randint(0, 50)
                 if operacao == 1:
