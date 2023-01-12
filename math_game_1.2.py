@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V1.6 (12/01/2023)
+JOGO DE MATEMÁTICA V1.9 (12/01/2023)
 '''
 
 from random import randint, randrange
@@ -38,12 +38,18 @@ while iniciar == 0:
             while iniciar in sim and vidas > 0:
                 print('\nRodada', rodada, ' Vidas:', vidas, ' Pontuação:', pontuacao)
                 operacao = randint(1, 4)
+                operacao = 3
                 x = randint(0, 50)
                 y = randint(0, 50)
                 if operacao == 1:
                     result = x + y
-                    resp = input('' + str(x) + ' + ' + str(y) + ' = ')
-                    if resp == str(result):
+                    while True:
+                        try:
+                            resp = int(input('' + str(x) + ' + ' + str(y) + ' = '))
+                            break
+                        except ValueError:
+                            print('Apenas números.')
+                    if str(resp) == str(result):
                         pontuacao += 1
                         print('Acertou! :)')
                         rodada += 1
@@ -54,18 +60,27 @@ while iniciar == 0:
                         vidas -= 1
                     if vidas == 0:
                         print('Você não tem mais vidas.')
-                        break    
+                        break
                     else:
                         iniciar = input('Continuar? ')
                 elif operacao == 2:
                     if y > x:
                         result = y - x
-                        resp = input('' + str(y) + ' - ' + str(x) + ' = ')
+                        while True:
+                            try:
+                                resp = int(input('' + str(y) + ' - ' + str(x) + ' = '))
+                                break
+                            except ValueError:
+                                print('Apenas números.')
                     else:
                         result = x - y
-                        resp = input('' + str(x) + ' - ' + str(y) + ' = ')
-
-                    if resp == str(result):
+                        while True:
+                            try:
+                                resp = int(input('' + str(x) + ' - ' + str(y) + ' = '))
+                                break
+                            except ValueError:
+                                print('Apenas números.')
+                    if str(resp) == str(result):
                         pontuacao += 1
                         print('Acertou! :)')
                         rodada += 1
@@ -83,8 +98,13 @@ while iniciar == 0:
                     x = randint(0, 10)
                     y = randint(0, 10)
                     result = x * y
-                    resp = input('' + str(x) + ' x ' + str(y) + ' = ')
-                    if resp == str(result):
+                    while True:
+                        try:
+                            resp = int(input('' + str(x) + ' x ' + str(y) + ' = '))
+                            break
+                        except ValueError:
+                            print('Apenas números.')
+                    if str(resp) == str(result):
                         pontuacao += 1
                         print('Acertou! :)')
                         rodada += 1
@@ -107,8 +127,13 @@ while iniciar == 0:
                         y = randint(1, 100)
                         resto = x % y
                     result = x // y
-                    resp = input('\n' + str(x) + ' / ' + str(y) + ' = ')
-                    if resp == str(result):
+                    while True:
+                        try:
+                            resp = int(input('' + str(x) + ' / ' + str(y) + ' = '))
+                            break
+                        except ValueError:
+                            print('Apenas números.')
+                    if str(resp) == str(result):
                         pontuacao += 1
                         print('Acertou! :)')
                     else:
@@ -118,13 +143,13 @@ while iniciar == 0:
                         vidas -= 1
                     if vidas == 0:
                         print('Você não tem mais vidas.')
-                        break    
+                        break
                     else:
                         iniciar = input('Continuar? ')
             if vidas == 0:
                 print('Game over\nPontuação final:', pontuacao)
                 iniciar = 'n'
-                break    
+                break
     while iniciar in inst:
         instrucoes()
         iniciar = 0
@@ -139,4 +164,3 @@ while iniciar == 0:
                 break;  '''
 else:
     saindo()
-
