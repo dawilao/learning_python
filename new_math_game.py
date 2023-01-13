@@ -21,6 +21,7 @@ def instrucoes():
     print('\nINSTRUÇÕES')
     print('#######################')
     print('Acerte o máximo de questões que conseguir.')
+    time.sleep(1)
 
 def nao_iniciar():
     iniciar = True
@@ -32,6 +33,7 @@ def nao_iniciar():
 def perdeu():
     iniciar == True
     print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
+    time.sleep(0.5)
     print('Voltando ao menu principal...')
     time.sleep(4)
     os.system('cls') # Clearing the Screen
@@ -83,7 +85,7 @@ while iniciar == True:
             print('Iniciando...')
             vidas = vidas_selecionadas
             rodada = 1
-            pontuação = 0
+            pontuacao = 0
             while iniciar in sim and vidas > 0:
                 print('\nRodada', rodada, ' Vidas:', vidas, ' Pontuação:', pontuacao)
                 operacao = randint(1, 4)
@@ -150,10 +152,8 @@ while iniciar == True:
                         vidas -= 1
                     if vidas == 0:
                         iniciar = True
-                        print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-                        print('Voltando ao menu principal...')
-                        time.sleep(4)
-                        os.system('cls') # Clearing the Screen
+                        perdeu()
+                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -187,10 +187,8 @@ while iniciar == True:
                         vidas -= 1
                     if vidas == 0:
                         iniciar = True
-                        print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-                        print('Voltando ao menu principal...')
-                        time.sleep(4)
-                        os.system('cls') # Clearing the Screen
+                        perdeu()
+                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -229,10 +227,8 @@ while iniciar == True:
                         vidas -= 1
                     if vidas == 0:
                         iniciar = True
-                        print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-                        print('Voltando ao menu principal...')
-                        time.sleep(4)
-                        os.system('cls') # Clearing the Screen
+                        perdeu()
+                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
