@@ -34,7 +34,7 @@ def nao_iniciar():
 def perdeu():
     iniciar == True
     print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-    time.sleep(1.5)
+    time.sleep(2.5)
     print('Voltando ao menu principal...')
     time.sleep(3)
     os.system('cls') # Clearing the Screen
