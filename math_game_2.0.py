@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V1.9 (12/01/2023)
+JOGO DE MATEMÁTICA V2.0 (13/01/2023)
 '''
 
 from random import randint, randrange
@@ -10,12 +10,13 @@ def menu_principal():
     print ('JOGO DE MATEMÁTICA')
     print('#######################')
     print('OBJETIVO: Acerte o máximo de questões que conseguir.')
-    print('Para INICIAR, digite iniciar.')
+    print('Para INICIAR, digite jogar.')
     print('Para ver as INSTRUÇÕES, digite instruções.')
+    print('Para selecionar a quantidade de VIDAS, digite vidas.')
 
 def saindo():
     print('\nObrigado por jogar!')
-    time.sleep(3) #sleep por 3 seg
+    time.sleep(2.5) #sleep por 3 seg
 
 def instrucoes():
     print('\nINSTRUÇÕES')
@@ -33,18 +34,18 @@ def nao_iniciar():
 def perdeu():
     iniciar == True
     print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-    time.sleep(0.5)
+    time.sleep(1.5)
     print('Voltando ao menu principal...')
-    time.sleep(4)
+    time.sleep(3)
     os.system('cls') # Clearing the Screen
     rodada = 0
     return True
 
-sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar']
+sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar', 'Jogar', 'jogar', 'JOGAR']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
 sair = ['Sair', 'sair', 'SAIR']
 nao = ["não", 'n', 'N', 'nao', 'NÃO']
-selec_vidas = ['vidas', 'v']
+selec_vidas = ['Vidas', 'vidas', 'v', 'VIDAS']
 
 pontuacao = 0
 iniciar = True
@@ -59,15 +60,18 @@ while iniciar == True:
             break
         while iniciar in inst:
             instrucoes()
-            iniciar = input('\nIniciar jogo? ')
+            iniciar = input('\nIniciar jogo? Vidas: ' + str(vidas) + '\n> ')
         while iniciar in selec_vidas:
             while True:
                 try:
                     vidas_selecionadas = int(input('Selecione a quantidade de vidas (1 ou 3): '))
+                    while vidas_selecionadas != 1 and vidas_selecionadas != 3:
+                        print('Apenas há a opção de 1 ou 3 vidas.')
+                        vidas_selecionadas = int(input('Selecione a quantidade de vidas (1 ou 3): '))
                     break
                 except ValueError:
                     print('Apenas números.')
-            iniciar = input('\nIniciar jogo? ') # FORA do try 
+            iniciar = input('\nIniciar jogo? Vidas: ' + str(vidas_selecionadas) + '\n> ') # FORA do try 
         if iniciar in nao: # if para voltar ao menu/primeiro while
             iniciar = True
             print('Voltando...')
@@ -83,6 +87,7 @@ while iniciar == True:
     else:
         while iniciar in sim:
             print('Iniciando...')
+            time.sleep(1.5)
             vidas = vidas_selecionadas
             rodada = 1
             pontuacao = 0
@@ -119,7 +124,7 @@ while iniciar == True:
                         if iniciar in nao or iniciar in sair:
                             iniciar = True
                             print('Voltando ao menu principal...')
-                            time.sleep(4)
+                            time.sleep(2)
                             os.system('cls') # Clearing the Screen
                             break
                         else:
@@ -161,7 +166,7 @@ while iniciar == True:
                         if iniciar in nao or iniciar in sair:
                             iniciar = True
                             print('Voltando ao menu principal...')
-                            time.sleep(4)
+                            time.sleep(2)
                             os.system('cls') # Clearing the Screen
                             break
                         else:
@@ -196,7 +201,7 @@ while iniciar == True:
                         if iniciar in nao or iniciar in sair:
                             iniciar = True
                             print('Voltando ao menu principal...')
-                            time.sleep(4)
+                            time.sleep(2)
                             os.system('cls') # Clearing the Screen
                             break
                         else:
@@ -236,7 +241,7 @@ while iniciar == True:
                         if iniciar in nao or iniciar in sair:
                             iniciar = True
                             print('Voltando ao menu principal...')
-                            time.sleep(4)
+                            time.sleep(2)
                             os.system('cls') # Clearing the Screen
                             break
                         else:
