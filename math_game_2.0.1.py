@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V2.0 (13/01/2023)
+JOGO DE MATEMÁTICA V2.0.1 (13/01/2023)
 '''
 
 from random import randint, randrange
@@ -34,14 +34,14 @@ def nao_iniciar():
 def perdeu():
     iniciar == True
     print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-    time.sleep(1.5)
+    time.sleep(2.5)
     print('Voltando ao menu principal...')
     time.sleep(3)
     os.system('cls') # Clearing the Screen
     rodada = 0
     return True
 
-sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar', 'Jogar', 'jogar', 'JOGAR']
+sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar', 'Jogar', 'jogar', 'JOGAR', 'ss', 'SS']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
 sair = ['Sair', 'sair', 'SAIR']
 nao = ["não", 'n', 'N', 'nao', 'NÃO']
@@ -116,7 +116,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -158,7 +157,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -193,7 +191,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -233,7 +230,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
