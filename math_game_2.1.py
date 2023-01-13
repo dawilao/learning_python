@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V2.0.1 (13/01/2023)
+JOGO DE MATEMÁTICA V2.1 (13/01/2023)
 '''
 
 from random import randint, randrange
@@ -13,6 +13,9 @@ def menu_principal():
     print('Para INICIAR, digite jogar.')
     print('Para ver as INSTRUÇÕES, digite instruções.')
     print('Para selecionar a quantidade de VIDAS, digite vidas.')
+    if cont_jogos > 0:
+        print('Última pontuação:', ultima_pontuacao)
+        print('Maior pontuação:', maior_pontuacao)
 
 def saindo():
     print('\nObrigado por jogar!')
@@ -34,9 +37,9 @@ def nao_iniciar():
 def perdeu():
     iniciar == True
     print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-    time.sleep(2.5)
+    time.sleep(2)
     print('Voltando ao menu principal...')
-    time.sleep(3)
+    time.sleep(3.5)
     os.system('cls') # Clearing the Screen
     rodada = 0
     return True
@@ -48,9 +51,12 @@ nao = ["não", 'n', 'N', 'nao', 'NÃO']
 selec_vidas = ['Vidas', 'vidas', 'v', 'VIDAS']
 
 pontuacao = 0
+ultima_pontuacao = 0
+maior_pontuacao1 = maior_pontuacao2 = 0
 iniciar = True
 vidas = vidas_selecionadas = 1
 rodada = 1
+cont_jogos = 0
 
 while iniciar == True:
     menu_principal()
@@ -86,7 +92,11 @@ while iniciar == True:
             iniciar = input('Tente novamente.\n> ')
     else:
         while iniciar in sim:
-            print('Iniciando...')
+            comecar = randint(1, 3)
+            if comecar == 3:
+                print('Que os jogos comecem...')
+            else:
+                print('Iniciando...')
             time.sleep(1.5)
             vidas = vidas_selecionadas
             rodada = 1
@@ -116,6 +126,7 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
+                        ultima_pontuacao = pontuacao
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -157,6 +168,7 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
+                        ultima_pontuacao = pontuacao
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -191,6 +203,7 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
+                        ultima_pontuacao = pontuacao
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -230,6 +243,7 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
+                        ultima_pontuacao = pontuacao
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -243,6 +257,12 @@ while iniciar == True:
                         else:
                             iniciar = input('Tente novamente. Continuar? > ')
             if vidas == 0:
+                cont_jogos += 1
+                if cont_jogos > 1:
+                    if pontuacao > maior_pontuacao:
+                        maior_pontuacao = pontuacao
+                else:
+                    maior_pontuacao = pontuacao
                 break
 else:
     saindo()
