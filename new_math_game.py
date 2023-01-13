@@ -30,11 +30,12 @@ def nao_iniciar():
     return
 
 def perdeu():
-    iniciar = True
+    iniciar == True
     print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
     print('Voltando ao menu principal...')
     time.sleep(4)
     os.system('cls') # Clearing the Screen
+    return True
 
 sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
@@ -78,13 +79,13 @@ while iniciar == True:
         else:
             iniciar = input('Tente novamente.\n> ')
     else:
-        while iniciar in sim:        
+        while iniciar in sim:
             print('Iniciando...')
             vidas = vidas_selecionadas
             while iniciar in sim and vidas > 0:
                 print('\nRodada', rodada, ' Vidas:', vidas, ' Pontuação:', pontuacao)
                 operacao = randint(1, 4)
-                operacao = 3
+                operacao = 1
                 x = randint(0, 50)
                 y = randint(0, 50)
                 if operacao == 1:
@@ -106,13 +107,17 @@ while iniciar == True:
                         vidas -= 1
                     if vidas == 0:
                         iniciar = True
-                        print('Game over. Você não tem mais vidas.\nPontuação final:', pontuacao, '\n')
-                        print('Voltando ao menu principal...')
-                        time.sleep(4)
-                        os.system('cls') # Clearing the Screen
+                        perdeu()
+                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
+                        if iniciar in nao or sair:
+                            iniciar = True
+                            print('Voltando ao menu principal...')
+                            time.sleep(4)
+                            os.system('cls') # Clearing the Screen
+                            break
                 elif operacao == 2:
                     if y > x:
                         result = y - x
