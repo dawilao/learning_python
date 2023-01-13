@@ -41,7 +41,7 @@ def perdeu():
     rodada = 0
     return True
 
-sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar', 'Jogar', 'jogar', 'JOGAR']
+sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar', 'Jogar', 'jogar', 'JOGAR', 'ss', 'SS']
 inst = ['2', 'Instrucoes', 'instrucoes', 'Instruções', 'instruções', 'inst']
 sair = ['Sair', 'sair', 'SAIR']
 nao = ["não", 'n', 'N', 'nao', 'NÃO']
