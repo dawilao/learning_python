@@ -35,6 +35,7 @@ def perdeu():
     print('Voltando ao menu principal...')
     time.sleep(4)
     os.system('cls') # Clearing the Screen
+    rodada = 0
     return True
 
 sim = ['1', 'Sim', 'sim', 's', 'S', 'iniciar', 'INICIAR', 'Iniciar']
@@ -43,11 +44,10 @@ sair = ['Sair', 'sair', 'SAIR']
 nao = ["não", 'n', 'N', 'nao', 'NÃO']
 selec_vidas = ['vidas', 'v']
 
-num_question = 1
 pontuacao = 0
 iniciar = True
-rodada = 1
 vidas = vidas_selecionadas = 1
+rodada = 1
 
 while iniciar == True:
     menu_principal()
@@ -82,10 +82,11 @@ while iniciar == True:
         while iniciar in sim:
             print('Iniciando...')
             vidas = vidas_selecionadas
+            rodada = 1
+            pontuação = 0
             while iniciar in sim and vidas > 0:
                 print('\nRodada', rodada, ' Vidas:', vidas, ' Pontuação:', pontuacao)
                 operacao = randint(1, 4)
-                operacao = 1
                 x = randint(0, 50)
                 y = randint(0, 50)
                 if operacao == 1:
@@ -112,12 +113,15 @@ while iniciar == True:
                         break
                     else:
                         iniciar = input('Continuar? ')
-                        if iniciar in nao or sair:
+                    while iniciar not in sim:
+                        if iniciar in nao or iniciar in sair:
                             iniciar = True
                             print('Voltando ao menu principal...')
                             time.sleep(4)
                             os.system('cls') # Clearing the Screen
                             break
+                        else:
+                            iniciar = input('Tente novamente. Continuar? > ')
                 elif operacao == 2:
                     if y > x:
                         result = y - x
@@ -153,6 +157,15 @@ while iniciar == True:
                         break
                     else:
                         iniciar = input('Continuar? ')
+                    while iniciar not in sim:
+                        if iniciar in nao or iniciar in sair:
+                            iniciar = True
+                            print('Voltando ao menu principal...')
+                            time.sleep(4)
+                            os.system('cls') # Clearing the Screen
+                            break
+                        else:
+                            iniciar = input('Tente novamente. Continuar? > ')
                 elif operacao == 3:
                     x = randint(0, 10)
                     y = randint(0, 10)
@@ -181,6 +194,15 @@ while iniciar == True:
                         break
                     else:
                         iniciar = input('Continuar? ')
+                    while iniciar not in sim:
+                        if iniciar in nao or iniciar in sair:
+                            iniciar = True
+                            print('Voltando ao menu principal...')
+                            time.sleep(4)
+                            os.system('cls') # Clearing the Screen
+                            break
+                        else:
+                            iniciar = input('Tente novamente. Continuar? > ')
                 else:
                     x = randint(0, 100)
                     y = randint(1, 100)
@@ -199,6 +221,7 @@ while iniciar == True:
                     if str(resp) == str(result):
                         pontuacao += 1
                         print('Acertou! :)')
+                        rodada += 1
                     else:
                         pontuacao -= 1
                         print('Errou :(\nResposta correta:', result)
@@ -213,7 +236,15 @@ while iniciar == True:
                         break
                     else:
                         iniciar = input('Continuar? ')
-                        break
+                    while iniciar not in sim:
+                        if iniciar in nao or iniciar in sair:
+                            iniciar = True
+                            print('Voltando ao menu principal...')
+                            time.sleep(4)
+                            os.system('cls') # Clearing the Screen
+                            break
+                        else:
+                            iniciar = input('Tente novamente. Continuar? > ')
             if vidas == 0:
                 break
 else:
