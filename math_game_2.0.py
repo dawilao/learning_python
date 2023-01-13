@@ -1,5 +1,5 @@
 '''
-JOGO DE MATEMÁTICA V2.0 (13/01/2023)
+JOGO DE MATEMÁTICA V2.0.1 (13/01/2023)
 '''
 
 from random import randint, randrange
@@ -116,7 +116,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -158,7 +157,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -193,7 +191,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
@@ -233,7 +230,6 @@ while iniciar == True:
                     if vidas == 0:
                         iniciar = True
                         perdeu()
-                        print(iniciar)
                         break
                     else:
                         iniciar = input('Continuar? ')
