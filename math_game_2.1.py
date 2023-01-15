@@ -92,11 +92,9 @@ while iniciar == True:
             iniciar = input('Tente novamente.\n> ')
     else:
         while iniciar in sim:
-            comecar = randint(1, 5)
-            if comecar == 1:
+            comecar = randint(1, 3)
+            if comecar == 3:
                 print('Que os jogos comecem...')
-            elif comecar == 2:
-                print('E lá vamos nós...')
             else:
                 print('Iniciando...')
             time.sleep(1.5)
