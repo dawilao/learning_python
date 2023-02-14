@@ -3,15 +3,24 @@
 '''
 
 from PyRastreamentoCorreios import rastrear
+from termcolor import colored  #print(colored('Error Test!!!', 'red'))
 import pandas as pd
 import re
 import os
 
-directory = 'C:\\Users\\dawis\\Documents'
+directory = os.path.join(os.path.expanduser("~"), "Documents")
+# directory = 'C:\\Users\\dawis\\Documents'
 filename = 'ultimos_rastreamentos.txt'
-file_path = directory + "\\" + filename
+file_path = os.path.join(directory, filename)
+print(file_path)
 if not os.path.exists(directory):
     os.makedirs(directory)
+
+def menu_inicial():
+    print('#########################################')
+    print('          RASTREAMENTO CORREIOS          ')
+    print('#########################################\n')
+
 
 def valida_cod_rastreio(cod_rastreio):
     '''Nesta validação, verificamos se o código de rastreamento começa com duas letras maiúsculas ([A-Z]{2}), 
@@ -24,12 +33,15 @@ def valida_cod_rastreio(cod_rastreio):
 
 def edita_arq():
     # Abre o arquivo para escrita
-    with open(os.path.join(directory, filename), "a") as f:
+    with open(os.path.join(directory, filename), "w") as f:
+        '''ara reescrever as informações no arquivo, em vez de adicionar novas informações abaixo da última linha, 
+        você precisa abrir o arquivo no modo de escrita ('w') em vez de modo de anexação ('a') na função edita_arq().
+        Isso irá substituir todo o conteúdo do arquivo existente pelo novo conteúdo que você está escrevendo'''
         # Escreve as informações
         f.write(f"Código de rastreio: {cod_rastreio}\n")
         f.write(f"Nome: {nome_pct}\n")
         f.write(f"Último status: {df.iloc[0]['status']}\n")
-        f.write(f"Data e hora: {df.iloc[0]['data']}\n\n")
+        f.write(f"Data e hora: {df.iloc[0]['data']}")
 
 def verif_ultimo_rastreio():
     if os.path.isfile(file_path) == True:
@@ -38,28 +50,48 @@ def verif_ultimo_rastreio():
             if lines[0] != []:
                 codigo_arq = lines[0].split(": ")[1].strip()
                 nome_arq = lines[1].split(": ")[1].strip()
-                rerastrear = input(f"Deseja rastrear novamente o código {codigo_arq} para {nome_arq}? > ")
-                if rerastrear.upper() == "S":
-                    return codigo_arq, nome_arq
+                rerastrear = input("Foi localizado seu último código rastreado!\n"
+                f"Deseja rastrear novamente o pacote {nome_arq} ({codigo_arq})? > ")
+                while not rerastrear.upper() == ["S", "N"]:
+                    if rerastrear.upper() == "S":
+                        return codigo_arq, nome_arq
+                    elif rerastrear.upper() == "N":
+                        return "NOVO", "NOVO"
+                    else:
+                        print(colored('Resposta incorreta.', 'red'))
+                        rerastrear = input(f"Deseja rastrear novamente o pacote {nome_arq} ({codigo_arq})? > ")
     else:
-        return 0, 0
+        return "NOVO", "NOVO"
 
-while True:
-    cod_rastreio, nome_arq = verif_ultimo_rastreio()
-    if cod_rastreio != 0:
-        # Código veio do arquivo
-        rastrear(cod_rastreio)
-        nome_pct = nome_arq
-        break
-    else:
-        # Código veio do usuário
+menu_inicial()
+cod_rastreio, nome_arq = verif_ultimo_rastreio()
+
+if cod_rastreio != "NOVO":
+    # Código veio do arquivo
+    rastrear(cod_rastreio)
+    nome_pct = nome_arq
+    statusList = rastrear(cod_rastreio)
+    while len(statusList['status_list']) == 0:
+        print('Objeto não encontrado na base de dados dos Correios.')
+        cod_rastreio = input("Digite o código de rastreamento correto: ")
+        statusList = rastrear(cod_rastreio)
+        nome_pct = input('Dê um nome ao código de rastreio: ')
+else:
+    # Código veio do usuário
+    while valida_cod_rastreio(cod_rastreio) == False:
         cod_rastreio = input("Digite o código de rastreamento: ")
-        if valida_cod_rastreio(cod_rastreio) == True:
-            rastrear(cod_rastreio)
-            nome_pct = input('Dê um nome ao código de rastreio: ')
-            break
-        else:
-            print("Código de rastreamento inválido. Por favor, tente novamente.")
+        statusList = rastrear(cod_rastreio)
+        while len(statusList['status_list']) == 0:
+            print('Objeto não encontrado na base de dados dos Correios.')
+            cod_rastreio = input("Digite o código de rastreamento: ")
+            statusList = rastrear(cod_rastreio)
+        else:    
+            if valida_cod_rastreio(cod_rastreio) == True:
+                rastrear(cod_rastreio)
+                nome_pct = input('Dê um nome ao código de rastreio: ')
+                break
+            else:
+                print("Código de rastreamento inválido. Por favor, tente novamente.")
 
 statusList = rastrear(cod_rastreio)
 
@@ -76,7 +108,7 @@ else:
 
     data = df.iloc[0]['data']  #armazena o conteúdo da primeira linha da coluna "data"
 
-    print('\nSeguem os ultimos últimos status do pacote:')
+    print(f'\nSeguem os ultimos últimos status do pacote do código {cod_rastreio}:')
     
     for i in range(len(df)):
         print(f"{df.iloc[i]['data']}: {df.iloc[i]['status']} | {df.iloc[i]['local']}")
@@ -87,7 +119,7 @@ else:
     #df.to_excel("status_table.xlsx", index=False)  #Gera um arquivo xlsx ta tabela
     #print(statusList['status_list'][0]['status'])
 
-    # Código teste: 'NA869896819BR'
+    # Código teste: 'NA869896819BR', 'NL383239602BR'
 
 edita_arq()
 
