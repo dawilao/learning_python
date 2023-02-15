@@ -1,5 +1,20 @@
 ''' Programa para rastrear pacotes nos Correios
     Versão: 2.0
+
+    Adição do módulo termcolor, para colorir o output no console;
+    Adição da função cor_aleatoria(), que gera uma cor aleatória para o output no console;
+    Adição das funções menu_inicial() e verif_ultimo_rastreio(), que são responsáveis por imprimir informações 
+iniciais na tela e verificar o último pacote rastreado, respectivamente;
+    Adição do diretório padrão para o arquivo ultimo_rastreamento.txt, que é o diretório "Documentos" do usuário 
+atual. Isso foi feito usando a biblioteca os para verificar a pasta padrão e criar o diretório caso não exista;
+    Adição da função edita_arq(), que abre o arquivo ultimo_rastreamento.txt e sobrescreve as informações com o novo 
+pacote rastreado;
+    Adição da variável cod_novo para verificar se o código de rastreio digitado pelo usuário é diferente do último 
+rastreado e, portanto, se deve ser salvo em um novo arquivo ultimo_rastreamento.txt;
+    Alteração da função valida_cod_rastreio() para retornar um valor booleano;
+    Alteração do código para verificar se o arquivo ultimo_rastreamento.txt existe antes de tentar lê-lo ou editá-lo;
+    Alteração do código que gera o caminho do arquivo ultimo_rastreamento.txt, para usar a variável directory em 
+vez de uma string com o caminho completo.
 '''
 
 from PyRastreamentoCorreios import rastrear
