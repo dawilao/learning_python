@@ -17,6 +17,7 @@ while True:
         print("Código de rastreamento inválido. Por favor, tente novamente.")
 
 statusList = rastrear(cod_rastreio)
+# print(statusList)
 
 if len(statusList['status_list']) == 0:
     print('Objeto não encontrado na base de dados dos Correios.')
