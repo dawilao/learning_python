@@ -37,7 +37,7 @@ def dividir_pdf_2(diretorio):
         if pagina + 1 < pdf.getNumPages():
             escreve_pdf.addPage(pdf.getPage(pagina))
             escreve_pdf.addPage(pdf.getPage(pagina + 1))
-            nome_arquivo_saida = '{}_{}-{}.pdf'.format(
+            nome_arquivo_saida = '{}_{}.pdf'.format(
                 nome_arquivo, pagina)
         
             # Define o nome do arquivo de saída e escreve o PDF atual para ele.
