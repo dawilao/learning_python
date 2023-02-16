@@ -62,3 +62,5 @@ if dividir == 1:
     dividir_pdf_1(diretorio)
 else:
     dividir_pdf_2(diretorio)
+
+print('Tecle Enter para sair.')
