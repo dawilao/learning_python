@@ -51,9 +51,9 @@ arquivo = input('Digite o nome do arquivo: ')
 diretorio = os.path.join(pasta, arquivo + '.pdf') 
 
 # Pergunta ao usuário se ele deseja dividir o PDF em arquivos com 1 ou 2 páginas cada.
-dividir = input('Dividir a cada 1 ou 2 páginas? > ')
-while dividir != '1' and dividir != '2':
-    dividir = input('Opção incorreta. Dividir a cada 1 ou 2 páginas? > ')
+dividir = int(input('Dividir a cada 1 ou 2 páginas? > '))
+while dividir != 1 and dividir != 2:
+    dividir = int(input('Opção incorreta. Dividir a cada 1 ou 2 páginas? > '))
 
 # Chama a função apropriada com base na escolha do usuário.
 if dividir == 1:
@@ -61,4 +61,4 @@ if dividir == 1:
 else:
     dividir_pdf_2(diretorio)
 
-print('Tecle Enter para sair.')
+input('Tecle Enter para sair.')
