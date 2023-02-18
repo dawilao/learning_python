@@ -34,9 +34,9 @@ if not os.path.exists(directory):
 cod_novo = True
 
 def menu_inicial():
-    print('#########################################')
-    print('          RASTREAMENTO CORREIOS          ')
-    print('#########################################\n')
+    print('###########################################')
+    print('           RASTREAMENTO CORREIOS           ')
+    print('###########################################\n')
 
 def cor_aleatoria():
     '''Função que retorna uma cor aleatória para o módulo termcolor.'''
