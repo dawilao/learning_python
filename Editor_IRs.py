@@ -6,6 +6,12 @@ Versão 1.0
 
 import os, re, time, PyPDF2, PyPDF4
 
+def menu():
+    print('###########################################################')
+    print('                      Editor de IRs                        ')
+    print('Programa para separar, renomear e criptografar PDFs dos IRs')
+    print('###########################################################\n')
+
 # função para obter o nome completo do arquivo pdf
 def get_name(filepath):
     try:
@@ -23,6 +29,11 @@ def get_name(filepath):
     except (FileNotFoundError, TypeError, PyPDF2.errors.FileNotDecryptedError):
         print(f'O arquivo {diretorio} não foi encontrado.')
 
+def limpa_linha(n=1):
+    LINE_UP = '\033[1A'
+    LINE_CLEAR = '\x1b[2K'
+    for i in range(n):
+        print(LINE_UP, end=LINE_CLEAR)
 
 def verifica_desktop(save_path):
     desktop = os.path.normpath(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop'))
@@ -45,19 +56,16 @@ def verifica_desktop(save_path):
     return save_path
 
 # função para criptografar pdf com o CPF localizado
-def criptografar_pdf_com_cpf(new_filepath, cpf):
-    with open(new_filepath, 'rb') as f:
+def criptografar_pdf_com_cpf(novo_filepath, cpf):
+    with open(novo_filepath, 'rb') as f:
         pdf = PyPDF2.PdfReader(f)
         pdf_writer = PyPDF2.PdfWriter()
         pdf_writer.append_pages_from_reader(pdf)
         pdf_writer.encrypt(cpf)
-        with open(new_filepath, 'wb') as f:
+        with open(novo_filepath, 'wb') as f:
             pdf_writer.write(f)
-            print(f'{new_filename} bloqueado com a senha {cpf}')
+            print(f'{novo_filename} bloqueado com a senha {cpf}')
             return 1
-
-# Cria uma variável para contar a quantidade de arquivos criptografados
-cont_criptografados = 0
 
 # Define uma função para dividir um PDF em arquivos contendo 1 página cada.
 def dividir_pdf_1(diretorio, diretorio_saida):
@@ -124,101 +132,135 @@ def dividir_pdf_2(diretorio, diretorio_saida):
     # Retorna a contagem de arquivos criados
     return contagem_dividir_pdf
 
-while True:
-    # Obtém o caminho para o arquivo PDF a ser dividido e o nome do arquivo.
-    while True:
-        pasta = input('Digite o caminho para encontrar o PDF a ser dividido: ')
-        if not os.path.exists(pasta):
-            print('Caminho incorreto. Por favor, redigite o caminho')
-        elif not os.path.isdir(pasta):
-            print('O caminho especificado não é um diretório. Por favor, redigite o caminho')
-        else:
-            break
+def verifica_duplicados(pasta):
+    # Cria um dicionário para armazenar o nome do arquivo e sua quantidade de ocorrências
+    arquivos_duplicados = {}
+    for arquivo in os.listdir(pasta):
+        if os.path.isfile(os.path.join(pasta, arquivo)):
+            verifica = re.search(r'^(.+)_\d+\.', arquivo)
+            if verifica:
+                filename = verifica.group(1)
+                if filename not in arquivos_duplicados:
+                    arquivos_duplicados[filename] = [arquivo]
+                else:
+                    arquivos_duplicados[filename].append(arquivo)
 
-    arquivo = input('Digite o nome do arquivo (com a extensão .pdf no final): ')
-    diretorio = os.path.join(pasta, arquivo)
-    nome_arquivo, extensao_arquivo = os.path.splitext(arquivo)
-    while extensao_arquivo.lower() != '.pdf' or not os.path.isfile(diretorio):
-        if extensao_arquivo.lower() != '.pdf':
-            print('O arquivo deve ter a extensão .pdf')
-        else:
-            print('Arquivo não encontrado.')
-        arquivo = input('Digite o nome do arquivo (com a extensão .pdf no final): ')
-        nome_arquivo, extensao_arquivo = os.path.splitext(arquivo)
-        diretorio = os.path.join(pasta, arquivo)
-    
-    while True:
-        # Obtém o caminho para o diretório onde os arquivos de saída devem ser salvos.
-        diretorio_saida = input('Digite o caminho para o diretório onde os arquivos de saída devem ser salvos: ')
-        if not os.path.exists(diretorio_saida):
-            print('Caminho incorreto. Por favor, redigite o caminho.')
-        elif not os.path.isdir(diretorio_saida):
-            print('O caminho especificado não é um diretório. Por favor, redigite o caminho.')
-        else:
-            desktop = os.path.normpath(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop'))
-            one_drive_desktop = os.path.normpath(os.path.join(os.path.join(os.environ['USERPROFILE']), 'OneDrive', 'Área de Trabalho'))
-            
-            save_to_desktop = False
-            
-            # Verifica se a pasta escolhida é a área de trabalho
-            if os.path.normpath(diretorio_saida) == desktop or os.path.normpath(diretorio_saida) == one_drive_desktop:
-                save_to_desktop = True
-            
-            if save_to_desktop:
-                # Pergunta ao usuário se deseja salvar diretamente na área de trabalho
-                confirm = input('Salvar diretamente na área de trabalho? (s/n) > ')
-                if confirm.lower() == 'n':
-                    # Caso o usuário não queira salvar diretamente na área de trabalho, pede uma nova pasta de destino
-                    continue
-            break
-
-    break
-    
-# Pergunta ao usuário se ele deseja dividir o PDF em arquivos com 1 ou 2 páginas cada.
-while True:
-    dividir = int(input('Dividir a cada 1 ou 2 páginas? > '))
-    if dividir != 1 and dividir != 2:
-        print('Opção incorreta. Selecione 1 ou 2.')
+    # Mostra apenas os arquivos duplicados
+    duplicados = [filename for filename, paths in arquivos_duplicados.items() if len(paths) > 1]
+    if duplicados:
+        limpa_linha()
+        print('Duplicados:\r')
+        for filename in duplicados:
+            print(os.path.splitext(filename)[0])
     else:
-        break
+        print('Nenhum arquivo duplicado encontrado.') 
 
-# Chama a função apropriada com base na escolha do usuário.
-if dividir == 1:
-    contagem_dividir_pdf = dividir_pdf_1(diretorio, diretorio_saida)
-else:
-    contagem_dividir_pdf = dividir_pdf_2(diretorio, diretorio_saida)
 
-print(f'\nDivisão finalizada. {contagem_dividir_pdf} arquivos criados.')
-print('Prosseguindo para a renomear e criptografar os arquivos...\n')
-time.sleep(4)
+if __name__ == '__main__':
 
-# percorre os arquivos no diretório
-for filename in os.listdir(diretorio_saida):
-    try:
-        if filename.endswith('.pdf'):
-            filepath = os.path.join(diretorio_saida, filename)
-            name, cpf = get_name(filepath)
-            if name:
-                # verifica se o arquivo com o mesmo nome já existe
-                new_filename = name + '.pdf'
-                i = 1
-                while os.path.exists(os.path.join(diretorio_saida, new_filename)):
-                    new_filename = name + f'_{i}.pdf'
-                    i += 1
-                
-                # renomeia o arquivo com o nome completo encontrado
-                new_filepath = os.path.join(diretorio_saida, new_filename)
-                os.rename(filepath, new_filepath)
-                print(f'{filename} renomeado para {new_filename}')
+    menu()
 
-                # bloqueia o arquivo com a senha do cpf
-                cont_criptografados += criptografar_pdf_com_cpf(new_filepath, cpf)
+    # Cria uma variável para contar a quantidade de arquivos criptografados
+    cont_criptografados = 0
+
+    while True:
+        # Obtém o caminho para o arquivo PDF a ser dividido e o nome do arquivo.
+        while True:
+            pasta = input('Digite o caminho para encontrar o PDF a ser dividido: ')
+            if not os.path.exists(pasta):
+                print('Caminho incorreto. Por favor, redigite o caminho')
+            elif not os.path.isdir(pasta):
+                print('O caminho especificado não é um diretório. Por favor, redigite o caminho')
             else:
-                print(f'Nome não encontrado em {filename}')
-    except (FileNotFoundError, TypeError, PyPDF2.errors.FileNotDecryptedError):
-        print(f'O arquivo {diretorio} não foi encontrado.')
+                break
 
+        arquivo = input('Digite o nome do arquivo (com a extensão .pdf no final): ')
+        diretorio = os.path.join(pasta, arquivo)
+        nome_arquivo, extensao_arquivo = os.path.splitext(arquivo)
+        while extensao_arquivo.lower() != '.pdf' or not os.path.isfile(diretorio):
+            if extensao_arquivo.lower() != '.pdf':
+                print('O arquivo deve ter a extensão .pdf')
+            else:
+                print('Arquivo não encontrado.')
+            arquivo = input('Digite o nome do arquivo (com a extensão .pdf no final): ')
+            nome_arquivo, extensao_arquivo = os.path.splitext(arquivo)
+            diretorio = os.path.join(pasta, arquivo)
+        
+        while True:
+            # Obtém o caminho para o diretório onde os arquivos de saída devem ser salvos.
+            diretorio_saida = input('Digite o caminho para o diretório onde os arquivos de saída devem ser salvos: ')
+            if not os.path.exists(diretorio_saida):
+                print('Caminho incorreto. Por favor, redigite o caminho.')
+            elif not os.path.isdir(diretorio_saida):
+                print('O caminho especificado não é um diretório. Por favor, redigite o caminho.')
+            else:
+                desktop = os.path.normpath(os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop'))
+                one_drive_desktop = os.path.normpath(os.path.join(os.path.join(os.environ['USERPROFILE']), 'OneDrive', 'Área de Trabalho'))
+                
+                save_to_desktop = False
+                
+                # Verifica se a pasta escolhida é a área de trabalho
+                if os.path.normpath(diretorio_saida) == desktop or os.path.normpath(diretorio_saida) == one_drive_desktop:
+                    save_to_desktop = True
+                
+                if save_to_desktop:
+                    # Pergunta ao usuário se deseja salvar diretamente na área de trabalho
+                    confirm = input('Salvar diretamente na área de trabalho? (s/n) > ')
+                    if confirm.lower() == 'n':
+                        # Caso o usuário não queira salvar diretamente na área de trabalho, pede uma nova pasta de destino
+                        continue
+                break
 
-print(f'\nPrograma finalizado. {cont_criptografados} arquivos criptografados')
+        break
+        
+    # Pergunta ao usuário se ele deseja dividir o PDF em arquivos com 1 ou 2 páginas cada.
+    while True:
+        dividir = int(input('Dividir a cada 1 ou 2 páginas? > '))
+        if dividir != 1 and dividir != 2:
+            print('Opção incorreta. Selecione 1 ou 2.')
+        else:
+            break
 
-input('\nTecle Enter para sair.')
+    # Chama a função apropriada com base na escolha do usuário.
+    if dividir == 1:
+        contagem_dividir_pdf = dividir_pdf_1(diretorio, diretorio_saida)
+    else:
+        contagem_dividir_pdf = dividir_pdf_2(diretorio, diretorio_saida)
+
+    print(f'\nDivisão finalizada. {contagem_dividir_pdf} arquivos criados.')
+    print('Prosseguindo para a renomear e criptografar os arquivos...\n')
+    time.sleep(4)
+
+    # percorre os arquivos no diretório
+    for filename in os.listdir(diretorio_saida):
+        try:
+            if filename.endswith('.pdf'):
+                filepath = os.path.join(diretorio_saida, filename)
+                name, cpf = get_name(filepath)
+                if name:
+                    # verifica se o arquivo com o mesmo nome já existe
+                    novo_filename = name + '.pdf'
+                    i = 1
+                    while os.path.exists(os.path.join(diretorio_saida, novo_filename)):
+                        novo_filename = name + f'_{i}.pdf'
+                        i += 1
+                    
+                    # renomeia o arquivo com o nome completo encontrado
+                    novo_filepath = os.path.join(diretorio_saida, novo_filename)
+                    os.rename(filepath, novo_filepath)
+                    print(f'{filename} renomeado para {novo_filename}')
+
+                    # bloqueia o arquivo com a senha do cpf
+                    cont_criptografados += criptografar_pdf_com_cpf(novo_filepath, cpf)
+                else:
+                    print(f'Nome não encontrado em {filename}')
+        except (FileNotFoundError, TypeError, PyPDF2.errors.FileNotDecryptedError):
+            print(f'O arquivo {diretorio} não foi encontrado.')
+
+    print(f'\nFinalizado. {cont_criptografados} arquivos renomeados e criptografados.\n')
+
+    print('Verificando duplicados...')
+    time.sleep(3)
+    verifica_duplicados(diretorio_saida)
+
+    input('\nPrograma finalizado. Tecle Enter para sair.')
