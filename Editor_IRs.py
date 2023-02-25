@@ -1,7 +1,7 @@
 '''
 Nome: Editor de IRs
 Função: Programa para separar, renomear e criptografar PDFs dos IRs de estagiários da empresa.
-Versão 1.0
+Versão 1.1
 '''
 
 import os, re, time, PyPDF2, PyPDF4
@@ -132,29 +132,13 @@ def dividir_pdf_2(diretorio, diretorio_saida):
     # Retorna a contagem de arquivos criados
     return contagem_dividir_pdf
 
-def verifica_duplicados(pasta):
-    # Cria um dicionário para armazenar o nome do arquivo e sua quantidade de ocorrências
-    arquivos_duplicados = {}
-    for arquivo in os.listdir(pasta):
-        if os.path.isfile(os.path.join(pasta, arquivo)):
-            verifica = re.search(r'^(.+)_\d+\.', arquivo)
-            if verifica:
-                filename = verifica.group(1)
-                if filename not in arquivos_duplicados:
-                    arquivos_duplicados[filename] = [arquivo]
-                else:
-                    arquivos_duplicados[filename].append(arquivo)
-
-    # Mostra apenas os arquivos duplicados
-    duplicados = [filename for filename, paths in arquivos_duplicados.items() if len(paths) > 1]
-    if duplicados:
-        limpa_linha()
-        print('Duplicados:\r')
-        for filename in duplicados:
-            print(os.path.splitext(filename)[0])
-    else:
-        print('Nenhum arquivo duplicado encontrado.') 
-
+def verificar_duplicatas(pasta):
+    lista_duplicados = []
+    file_list = os.listdir(pasta)
+    for file_name in file_list:
+        if '_' in file_name:
+            lista_duplicados.append(file_name)
+    return lista_duplicados
 
 if __name__ == '__main__':
 
@@ -261,6 +245,14 @@ if __name__ == '__main__':
 
     print('Verificando duplicados...')
     time.sleep(3)
-    verifica_duplicados(diretorio_saida)
-
+    duplicados = verificar_duplicatas(diretorio_saida)
+    
+    if len(duplicados) > 0:
+        limpa_linha()
+        print('Arquivos duplicados:')
+        for nomes in range(len(duplicados)):
+            print(duplicados[nomes])
+    else:
+        print('Não há arquivos duplicados.')
+    
     input('\nPrograma finalizado. Tecle Enter para sair.')

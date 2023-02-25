@@ -1,5 +1,5 @@
 import os
-import re, time
+import time
 
 pasta = 'C:\\Users\\dawis\\Documents\\IR'
 
@@ -12,29 +12,14 @@ def clear_line(n=1):
     for i in range(n):
         print(LINE_UP, end=LINE_CLEAR)
 
-# Cria um dicionário para armazenar o nome do arquivo e sua quantidade de ocorrências
-arquivos_duplicados = {}
-for arquivo in os.listdir(pasta):
-    if os.path.isfile(os.path.join(pasta, arquivo)):
-        verifica = re.search(r'^(.+)_\d+\..+', arquivo)
-        if verifica:
-            filename = verifica.group(1)
-            if filename not in arquivos_duplicados:
-                arquivos_duplicados[filename] = [arquivo]
-            else:
-                arquivos_duplicados[filename].append(arquivo)
-        else:
-            if arquivo not in arquivos_duplicados:
-                arquivos_duplicados[arquivo] = [arquivo]
-            else:
-                arquivos_duplicados[arquivo].append(arquivo)
+def verificar_duplicatas(pasta):
+	file_list = os.listdir(pasta)
 
-# Mostra apenas os arquivos duplicados
-duplicados = [filename for filename, paths in arquivos_duplicados.items() if len(paths) > 1]
-if duplicados:
-    print('ARQUIVOS DUPLICADOS:')
-    for filename in duplicados:
-        print(filename)
-else:
-    print('Nenhum arquivo duplicado encontrado.')
+	for file_name in file_list:
+		if "_" in file_name:
+        		print(file_name)    	
+    
+# exemplo de uso
+path = "C:\\Users\\dawis\\Documents\\IR"
+find_duplicates(path)
 
