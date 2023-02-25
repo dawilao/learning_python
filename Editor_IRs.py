@@ -7,10 +7,10 @@ Versão 1.1
 import os, re, time, PyPDF2, PyPDF4
 
 def menu():
-    print('###########################################################')
-    print('                      Editor de IRs                        ')
-    print('Programa para separar, renomear e criptografar PDFs dos IRs')
-    print('###########################################################\n')
+    print('############################################################')
+    print('                       Editor de IRs                        ')
+    print(' Programa para separar, renomear e criptografar IRs em PDFs ')
+    print('############################################################\n')
 
 # função para obter o nome completo do arquivo pdf
 def get_name(filepath):
