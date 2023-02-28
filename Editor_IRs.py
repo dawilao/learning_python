@@ -30,6 +30,19 @@ def get_name(filepath):
     # Se não encontrar o nome e o cpf, retorna None
     return None
 
+def verifica_copia_dados(filepath):
+    '''Função para obter o nome completo do arquivo pdf'''
+    with open(filepath, 'rb') as f:
+        pdf = PyPDF2.PdfReader(f)
+        # Processa apenas a primeira página do pdf
+        page = pdf.pages[0]
+        # Procura a string que contém o nome completo
+        match = re.search(r'(\d{3}\.\d{3}\.\d{3})-(\d{2})\s(.+?)\n.*Natureza do Rendimento', page.extract_text())
+        if match:
+            return True
+    # Se não encontrar o nome e o cpf, retorna False
+    return False
+
 def limpa_linha(n=1):
     '''Função para limpar a linha superior.'''
     LINE_UP = '\033[1A'
@@ -181,8 +194,8 @@ if __name__ == '__main__':
                 else:
                     cprint('Arquivo não encontrado.', 'yellow')               
             else:
-                verifica_copia_dados_pdf = get_name(diretorio)
-                if not verifica_copia_dados_pdf:
+                ver = verifica_copia_dados(diretorio)
+                if not ver:
                     cprint(f'ERRO: Nome e CPF não encontrados no arquivo {arquivo}.\n'
                        '      Verifique se as informações constantes no PDF podem ser copiadas e coladas em outro local.',
                        'red')
