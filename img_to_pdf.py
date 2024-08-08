@@ -83,11 +83,23 @@ if __name__ == "__main__":
         # Pasta de entrada contendo as imagens
         input_folder = input("Insira a pasta onde encontram-se as imagens: ")
 
+        # Altera a escolha para criar as pastas
+        if input_folder.lower() in ["1", "sim", "s"]:
+            print("Você escolheu criar as pastas.\n")
+            escolha_criar_pastas = "1"
+            continue  # Volta ao início do loop para solicitar o caminho novamente
+        
+        # Altera a escolha para não criar as pastas
+        if input_folder.lower() in ["0", "n", "nao", "não"]:
+            print("Você escolheu não criar as pastas.\n")
+            escolha_criar_pastas = "0"
+            continue  # Volta ao início do loop para solicitar o caminho novamente
+
         # Verifica se a pasta existe
         if not os.path.exists(input_folder):
             print("A pasta inserida não existe. Por favor, insira um caminho válido.\n")
             continue  # Volta ao início do loop para solicitar o caminho novamente
-
+        
         # Nome do PDF de saída
         output_pdf = os.path.join(input_folder, "EXECUÇÃO.pdf")
 
