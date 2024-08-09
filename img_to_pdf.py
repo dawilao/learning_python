@@ -1,8 +1,10 @@
+# Versão 1.0.1
+# Ultima alteração em 09/08/2024, às 10:32
+
 import os
 from PIL import Image
-from reportlab.lib.pagesizes import letter
+from reportlab.lib.pagesizes import letter, A4
 from reportlab.pdfgen import canvas
-from random import randint, randrange
 
 def convert_to_pdf(image_folder, output_pdf):
     # Obtém a lista de arquivos na pasta de imagens
@@ -14,7 +16,7 @@ def convert_to_pdf(image_folder, output_pdf):
         return
 
     # Cria um novo documento PDF
-    c = canvas.Canvas(output_pdf, pagesize=letter)
+    c = canvas.Canvas(output_pdf, pagesize=A4)
 
     for image_file in image_files:
         # Abre a imagem
@@ -24,7 +26,7 @@ def convert_to_pdf(image_folder, output_pdf):
 
         # Calcula as dimensões da imagem para caber na página com margens
         img_width, img_height = img.size
-        page_width, page_height = letter
+        page_width, page_height = A4
         if img_width > img_height:
             scaled_width = page_width
             scaled_height = (page_width / img_width) * img_height
