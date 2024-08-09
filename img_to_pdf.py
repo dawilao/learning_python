@@ -1,10 +1,13 @@
-# Versão 1.0.1
-# Ultima alteração em 09/08/2024, às 10:32
-
 import os
 from PIL import Image
-from reportlab.lib.pagesizes import letter, A4
+from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
+from PyPDF2 import PdfReader, PdfWriter
+
+def versão():
+    print("\nPrograma criado por: Dawison Nascimento")
+    print("Versão 2.0.2")
+    print("Ultima alteração em 09/08/2024, às 17:48")
 
 def convert_to_pdf(image_folder, output_pdf):
     # Obtém a lista de arquivos na pasta de imagens
@@ -67,6 +70,22 @@ def criar_pastas(diretorio):
     else:
         print("Nenhuma pasta foi criada.")
 
+def dividir_pdf_1(diretorio, diretorio_saida):
+    nome_arquivo = os.path.splitext(os.path.basename(diretorio))[0]
+    pdf = PdfReader(diretorio)
+    
+    for pagina in range(len(pdf.pages)):
+        escreve_pdf = PdfWriter()
+        escreve_pdf.add_page(pdf.pages[pagina])
+
+        nome_arquivo_saida = '{}_{}.pdf'.format(nome_arquivo, pagina)
+        nome_completo_saida = os.path.join(diretorio_saida, nome_arquivo_saida)
+        
+        with open(nome_completo_saida, 'wb') as saida:
+            escreve_pdf.write(saida)
+        
+        print('Criado: {}'.format(nome_arquivo_saida))
+
 if __name__ == "__main__":
     iniciar = True
 
@@ -74,7 +93,7 @@ if __name__ == "__main__":
     contagem_print = 0
 
     # Definindo os comandos válidos
-    comandos_validos = ["1", "sim", "s", "0", "n", "nao", "não", "comando", "comandos", "c"]
+    comandos_validos = ["1", "sim", "s", "0", "n", "nao", "não", "comando", "comandos", "c", "3", "dividir", "v", "versao", "versão"]
 
     print("____________________________________________________________________________________________________")
 
@@ -128,13 +147,43 @@ if __name__ == "__main__":
                     if input_folder.lower() in ["1", "sim", "s"]:
                         print("Você escolheu criar as pastas.\n")
                         escolha_criar_pastas = True
+                    
+                    # Inicia a função para dividir PDF
+                    elif input_folder.lower() in ["3", "dividir"]:
+                        funcao_dividir_pdf = True
+
+                        while funcao_dividir_pdf:
+                            escolha_criar_pastas = False
+
+                            pasta = input('\nDigite o caminho para encontrar o PDF a ser dividido: ')
+                            arquivo = input('Digite o nome do arquivo: ')
+                            diretorio = os.path.join(pasta, arquivo + '.pdf')
+
+                            # Verifica se o arquivo existe. Se existir, roda a função
+                            if os.path.isfile(diretorio):
+                                diretorio_saida = pasta
+                                dividir_pdf_1(diretorio, diretorio_saida)
+
+                                # Finaliza a função após executar
+                                funcao_dividir_pdf = False   
+                                contagem_print += 1
+                                input("\nDivisão finalizada. Pressione Enter para voltar.")
+
+                            # Se não existir, solicita nova entrada
+                            else:
+                                print("Arquivo não encontrado. Tente novamente.")
 
                     elif input_folder.lower() in ["comando", "comandos", "c"]:
                         print("\nComandos válidos:")
                         print("Para criar as pastas, digite ""1"", ""sim"" ou ""s"".")
-                        print("Para não criar as pastas, digite ""0"", ""nao"" ou ""n"".\n")
+                        print("Para não criar as pastas, digite ""0"", ""nao"" ou ""n"".")
+                        print("Para dividir PDF, digite ""3"" ou ""dividir"".")
+                        print("Para saber a versão do programa, digite ""v"", ""versao"" ou ""versão""")
                         contagem_print -= 1
-                    
+
+                    elif input_folder.lower() in ["v", "versao", "versão"]:
+                        versão()
+
                     else:
                         print("Você escolheu não criar as pastas.\n")
                         escolha_criar_pastas = False
