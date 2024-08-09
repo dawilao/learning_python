@@ -2,6 +2,7 @@ import os
 from PIL import Image
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+from random import randint, randrange
 
 def convert_to_pdf(image_folder, output_pdf):
     # Obtém a lista de arquivos na pasta de imagens
@@ -67,6 +68,14 @@ def criar_pastas(diretorio):
 if __name__ == "__main__":
     iniciar = True
 
+    # Iniciando a variável de contagem para print de mensagem específica
+    contagem_print = 0
+
+    # Definindo os comandos válidos
+    comandos_validos = ["1", "sim", "s", "0", "n", "nao", "não", "comando", "comandos", "c"]
+
+    print("____________________________________________________________________________________________________")
+
     # Definir se o usuário deseja que as pastas sejam criadas
     escolha_criar_pastas = input("Responda digitando 1 para SIM ou 0 para NÃO.\nDeseja criar as pastas padrões (Documentos e Levantamento)? ")
 
@@ -76,39 +85,59 @@ if __name__ == "__main__":
 
     if escolha_criar_pastas.lower() in ["1", "sim", "s"]:
         print("Você escolheu criar as pastas.\n")
+        escolha_criar_pastas = True
     else:
         print("Você escolheu não criar as pastas.\n")
+        escolha_criar_pastas = False
         
-    while iniciar == True:
-        # Pasta de entrada contendo as imagens
-        input_folder = input("Insira a pasta onde encontram-se as imagens: ")
+    while iniciar:
+            print("____________________________________________________________________________________________________")
 
-        # Altera a escolha para criar as pastas
-        if input_folder.lower() in ["1", "sim", "s"]:
-            print("Você escolheu criar as pastas.\n")
-            escolha_criar_pastas = "1"
-            continue  # Volta ao início do loop para solicitar o caminho novamente
-        
-        # Altera a escolha para não criar as pastas
-        if input_folder.lower() in ["0", "n", "nao", "não"]:
-            print("Você escolheu não criar as pastas.\n")
-            escolha_criar_pastas = "0"
-            continue  # Volta ao início do loop para solicitar o caminho novamente
+            # Verifica contagem_print para mostrar a mensagem específica
+            if contagem_print > 4:
+                input("\nLimpando a tela... Pressione Enter.")
+                os.system('cls')
+                print("____________________________________________________________________________________________________")
+                contagem_print = 0
+            elif contagem_print == 0:
+                print("Para saber os comandos válidos, digite ""c"" ou ""comandos"".")
+                contagem_print += 1
+            else:
+                contagem_print += 1
+                pass
 
-        # Verifica se a pasta existe
-        if not os.path.exists(input_folder):
-            print("A pasta inserida não existe. Por favor, insira um caminho válido.\n")
-            continue  # Volta ao início do loop para solicitar o caminho novamente
-        
-        # Nome do PDF de saída
-        output_pdf = os.path.join(input_folder, "EXECUÇÃO.pdf")
+            # Pasta de entrada contendo as imagens
+            input_folder = input("Insira um comando válido ou a pasta onde encontram-se as imagens: ")
 
-        # Converte as imagens para PDF
-        convert_to_pdf(input_folder, output_pdf)
+            # Verifica se o diretório é acessível
+            if os.path.isdir(input_folder):
+                # Nome do PDF de saída
+                output_pdf = os.path.join(input_folder, "EXECUÇÃO.pdf")
 
-        # Usando a função para criar duas pastas, caso o usuário tenha optado por isso
-        if escolha_criar_pastas == "1":
-            criar_pastas(input_folder)
+                # Converte as imagens para PDF
+                convert_to_pdf(input_folder, output_pdf)
 
-    else:
-        input("\nPressione ENTER para finalizar.")
+                # Usando a função para criar duas pastas, caso o usuário tenha optado por isso
+                if escolha_criar_pastas:
+                    criar_pastas(input_folder)
+            else:
+                # Verifica se a entrada é um comando válido
+                if input_folder.lower() in comandos_validos:
+                    if input_folder.lower() in ["1", "sim", "s"]:
+                        print("Você escolheu criar as pastas.\n")
+                        escolha_criar_pastas = True
+
+                    elif input_folder.lower() in ["comando", "comandos", "c"]:
+                        print("\nComandos válidos:")
+                        print("Para criar as pastas, digite ""1"", ""sim"" ou ""s"".")
+                        print("Para não criar as pastas, digite ""0"", ""nao"" ou ""n"".\n")
+                        contagem_print -= 1
+                    
+                    else:
+                        print("Você escolheu não criar as pastas.\n")
+                        escolha_criar_pastas = False
+                
+                else:
+                    print("Comando ou diretório inválido. Tente novamente.\n")
+                    
+    input("\nPressione ENTER para finalizar.")
