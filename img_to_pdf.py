@@ -1,14 +1,16 @@
-import os
+import os, errno
 from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfReader, PdfWriter
 
+# Função para mostrar a versão do programa
 def versão():
     print("\nPrograma criado por: Dawison Nascimento")
-    print("Versão 2.0.2")
-    print("Ultima alteração em 09/08/2024, às 17:48")
+    print("Versão 2.1.1")
+    print("Ultima alteração em 13/08/2024, às 11:11")
 
+# Função para converter arquivos JPG em PDF
 def convert_to_pdf(image_folder, output_pdf):
     # Obtém a lista de arquivos na pasta de imagens
     image_files = sorted([f for f in os.listdir(image_folder) if f.endswith('.jpg') or f.endswith('.jpeg')])
@@ -47,7 +49,7 @@ def convert_to_pdf(image_folder, output_pdf):
     c.save()
     print("PDF criado com sucesso em:", output_pdf, "\n")
 
-#Função para criar pastas
+# Função para criar pastas
 def criar_pastas(diretorio):
     # Verifica se o diretório existe, se não, cria
     if not os.path.exists(diretorio):
@@ -62,7 +64,11 @@ def criar_pastas(diretorio):
             os.makedirs(os.path.join(diretorio, pasta))
             pastas_criadas.append(pasta)
         except OSError as e:
-            print(f"Erro ao criar a pasta {pasta}: {e}")
+            # Verificca se o erro é de pasta já existente
+            if e.errno == errno.EEXIST:
+                print(f"A pasta {pasta} já existe.")
+            else:
+                print(f"Erro ao criar a pasta {pasta}: {e}")
 
     # Informa as pastas criadas
     if pastas_criadas:
@@ -70,6 +76,7 @@ def criar_pastas(diretorio):
     else:
         print("Nenhuma pasta foi criada.")
 
+# Função para dividir arquivo PDF
 def dividir_pdf_1(diretorio, diretorio_saida):
     nome_arquivo = os.path.splitext(os.path.basename(diretorio))[0]
     pdf = PdfReader(diretorio)
@@ -93,7 +100,7 @@ if __name__ == "__main__":
     contagem_print = 0
 
     # Definindo os comandos válidos
-    comandos_validos = ["1", "sim", "s", "0", "n", "nao", "não", "comando", "comandos", "c", "3", "dividir", "v", "versao", "versão"]
+    comandos_validos = ["1", "sim", "s", "0", "n", "nao", "não", "comando", "comandos", "c", "3", "dividir", "v", "versao", "versão", "2", "pastas"]
 
     print("____________________________________________________________________________________________________")
 
@@ -148,6 +155,20 @@ if __name__ == "__main__":
                         print("Você escolheu criar as pastas.\n")
                         escolha_criar_pastas = True
                     
+                    # Inicia a oopção para criar apenas as pastas
+                    elif input_folder.lower() in ["2", "pastas"]:
+                        funcao_criar_pasta = True
+
+                        while funcao_criar_pasta:
+                            pasta = input("\nInsira o caminho para criação das pastas: ")
+
+                            if os.path.isdir(pasta):
+                                criar_pastas(pasta)
+                                break
+
+                            else:
+                                print("Comando ou diretório inválido. Tente novamente.")
+
                     # Inicia a função para dividir PDF
                     elif input_folder.lower() in ["3", "dividir"]:
                         funcao_dividir_pdf = True
@@ -175,10 +196,11 @@ if __name__ == "__main__":
 
                     elif input_folder.lower() in ["comando", "comandos", "c"]:
                         print("\nComandos válidos:")
-                        print("Para criar as pastas, digite ""1"", ""sim"" ou ""s"".")
                         print("Para não criar as pastas, digite ""0"", ""nao"" ou ""n"".")
+                        print("Para criar as pastas, digite ""1"", ""sim"" ou ""s"".")
+                        print("Para criar APENAS as pastas, digite ""2"" ou ""pastas"".")
                         print("Para dividir PDF, digite ""3"" ou ""dividir"".")
-                        print("Para saber a versão do programa, digite ""v"", ""versao"" ou ""versão""")
+                        print("Para saber a versão do programa, digite ""v"", ""versao"" ou ""versão"".")
                         contagem_print -= 1
 
                     elif input_folder.lower() in ["v", "versao", "versão"]:
